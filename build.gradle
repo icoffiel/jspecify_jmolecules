@@ -1,0 +1,68 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.5.3'
+    id 'io.spring.dependency-management' version '1.1.7'
+
+    id 'net.ltgt.errorprone' version '4.1.0' // NullAway is an extension of error prone
+}
+
+group = 'com.icoffiel'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        // NullAway needs language features of Java 24 for array checking
+        languageVersion = JavaLanguageVersion.of(24)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 21
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation 'org.jspecify:jspecify:1.0.0'
+    errorprone 'com.google.errorprone:error_prone_core:2.37.0' // https://github.com/google/error-prone
+    errorprone 'com.uber.nullaway:nullaway:0.12.6' // https://github.com/uber/NullAway
+
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'org.postgresql:postgresql'
+
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+    testImplementation 'org.testcontainers:junit-jupiter'
+    testImplementation 'org.testcontainers:postgresql'
+
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.errorprone {
+        disableAllChecks = true // Other error prone checks are disabled
+        option("NullAway:OnlyNullMarked", "true") // Enable nullness checks only in null-marked code
+        error("NullAway") // bump checks from warnings (default) to errors
+
+        // nullability of arrays (and varargs)
+        option("NullAway:JSpecifyMode", "true") // https://github.com/uber/NullAway/wiki/JSpecify-Support
+    }
+}
