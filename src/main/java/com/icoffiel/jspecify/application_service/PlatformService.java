@@ -1,7 +1,7 @@
-package com.icoffiel.jspecify.platform;
+package com.icoffiel.jspecify.application_service;
 
-import com.icoffiel.jspecify.platform.rest.CreatePlatformDto;
-import com.icoffiel.jspecify.platform.rest.PlatformDto;
+import com.icoffiel.jspecify.infra.adapter.controller.rest.CreatePlatformDto;
+import com.icoffiel.jspecify.infra.adapter.controller.rest.PlatformDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.icoffiel.jspecify.exception;
+package com.icoffiel.jspecify.infra.exception;
 
 import lombok.Getter;
 

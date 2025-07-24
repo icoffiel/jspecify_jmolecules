@@ -1,7 +1,8 @@
-package com.icoffiel.jspecify.platform;
+package com.icoffiel.jspecify.infra.adapter.controller;
 
-import com.icoffiel.jspecify.exception.NotFoundException;
-import com.icoffiel.jspecify.platform.rest.PlatformDto;
+import com.icoffiel.jspecify.application_service.PlatformService;
+import com.icoffiel.jspecify.infra.adapter.controller.rest.PlatformDto;
+import com.icoffiel.jspecify.infra.exception.NotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,8 @@
-package com.icoffiel.jspecify.platform;
+package com.icoffiel.jspecify.infra.adapter.controller;
 
-import com.icoffiel.jspecify.platform.rest.CreatePlatformDto;
-import com.icoffiel.jspecify.platform.rest.PlatformDto;
+import com.icoffiel.jspecify.application_service.PlatformService;
+import com.icoffiel.jspecify.infra.adapter.controller.rest.CreatePlatformDto;
+import com.icoffiel.jspecify.infra.adapter.controller.rest.PlatformDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
