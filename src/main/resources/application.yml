@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: jspecify
+  mvc:
+    problemdetails:
+      enabled: true
