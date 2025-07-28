@@ -1,49 +1,56 @@
 package com.icoffiel.jspecify.infra.adapter.controller;
 
-import com.icoffiel.jspecify.application_service.PlatformService;
-import com.icoffiel.jspecify.infra.adapter.controller.rest.CreatePlatformDto;
-import com.icoffiel.jspecify.infra.adapter.controller.rest.PlatformDto;
+import com.icoffiel.jspecify.application_service.usecase.*;
+import com.icoffiel.jspecify.infra.adapter.controller.dto.CreatePlatformRequest;
+import com.icoffiel.jspecify.infra.adapter.controller.dto.PlatformCreatedResponse;
+import com.icoffiel.jspecify.infra.adapter.controller.dto.PlatformResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/platform")
 public class PlatformController {
-    private final PlatformService platformService;
-
-    @GetMapping
-    public List<PlatformDto> getPlatforms() {
-        return platformService.getPlatforms();
-    }
-
-    @GetMapping("/{id}")
-    public PlatformDto getPlatform(@PathVariable UUID id) {
-        return platformService.getPlatform(id);
-    }
+    private final CreatePlatformUseCase createPlatformUseCase;
+    private final GetAllPlatformsUseCase getAllPlatformsUseCase;
 
     @PostMapping
-    public ResponseEntity<PlatformDto> createPlatform(@RequestBody @Validated CreatePlatformDto createPlatformRequestDto) {
-        return new ResponseEntity<>(
-                platformService.createPlatform(createPlatformRequestDto),
-                HttpStatus.CREATED
+    public ResponseEntity<PlatformCreatedResponse> createOrder(@Valid @RequestBody CreatePlatformRequest request) {
+        CreatePlatformCommand command = new CreatePlatformCommand(
+            request.name(),
+            request.releaseDate(),
+            request.manufacturer()
         );
+
+        PlatformCreatedDto platformCreatedDto = createPlatformUseCase.createPlatform(command);
+
+        PlatformCreatedResponse response = new PlatformCreatedResponse(
+            platformCreatedDto.id(),
+            platformCreatedDto.name(),
+            platformCreatedDto.releaseDate(),
+            platformCreatedDto.manufacturer()
+        );
+
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePlatform(@PathVariable UUID id) {
-        platformService.deletePlatform(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+    @GetMapping
+    public List<PlatformResponse> getPlatforms() {
+        List<PlatformDto> platforms = getAllPlatformsUseCase.getAllPlatforms();
 
-    @PutMapping("/{id}")
-    public PlatformDto updatePlatform(@PathVariable UUID id, @RequestBody @Validated PlatformDto platformDto) {
-        return platformService.updatePlatform(id, platformDto);
+        return platforms.stream()
+            .map(platform -> new PlatformResponse(
+                platform.id(),
+                platform.name(),
+                platform.releaseDate(),
+                platform.manufacturer()
+            ))
+            .collect(Collectors.toList());
     }
 }

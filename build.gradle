@@ -30,15 +30,24 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    set('springModulithVersion', "1.4.1")
+}
+
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.modulith:spring-modulith-starter-core'
 
     implementation 'org.jspecify:jspecify:1.0.0'
     errorprone 'com.google.errorprone:error_prone_core:2.37.0' // https://github.com/google/error-prone
     errorprone 'com.uber.nullaway:nullaway:0.12.6' // https://github.com/uber/NullAway
+
+    implementation 'org.jmolecules:jmolecules-ddd:1.9.0'
+    implementation 'org.jmolecules:jmolecules-onion-architecture:1.10.0'
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.postgresql:postgresql'
@@ -47,10 +56,20 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+    testImplementation 'org.springframework.modulith:spring-modulith-starter-test'
     testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.testcontainers:postgresql'
 
+    testImplementation 'com.tngtech.archunit:archunit-junit5:1.4.1'
+    testImplementation 'org.jmolecules.integrations:jmolecules-archunit:0.28.0'
+
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.modulith:spring-modulith-bom:${springModulithVersion}"
+    }
 }
 
 tasks.named('test') {
