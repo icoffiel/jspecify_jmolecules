@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -19,6 +20,8 @@ import java.util.stream.Collectors;
 public class PlatformController {
     private final CreatePlatformUseCase createPlatformUseCase;
     private final GetAllPlatformsUseCase getAllPlatformsUseCase;
+    private final DeletePlatformUseCase deletePlatformUseCase;
+    private final GetPlatformUseCase getPlatformUseCase;
 
     @PostMapping
     public ResponseEntity<PlatformCreatedResponse> createOrder(@Valid @RequestBody CreatePlatformRequest request) {
@@ -52,5 +55,22 @@ public class PlatformController {
                 platform.manufacturer()
             ))
             .collect(Collectors.toList());
+    }
+
+    @GetMapping("/{id}")
+    public PlatformResponse getPlatform(@PathVariable UUID id) {
+        PlatformDto platform = getPlatformUseCase.getPlatform(id);
+        return new PlatformResponse(
+            platform.id(),
+            platform.name(),
+            platform.releaseDate(),
+            platform.manufacturer()
+        );
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePlatform(@PathVariable UUID id) {
+        deletePlatformUseCase.deletePlatform(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

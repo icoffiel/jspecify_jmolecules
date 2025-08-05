@@ -1,9 +1,7 @@
 package com.icoffiel.jspecify.infra.adapter.controller;
 
-import com.icoffiel.jspecify.application_service.usecase.CreatePlatformUseCase;
-import com.icoffiel.jspecify.application_service.usecase.GetAllPlatformsUseCase;
-import com.icoffiel.jspecify.application_service.usecase.PlatformCreatedDto;
-import com.icoffiel.jspecify.application_service.usecase.PlatformDto;
+import com.icoffiel.jspecify.application_service.usecase.*;
+import com.icoffiel.jspecify.infra.exception.NotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +30,12 @@ public class PlatformControllerTest {
 
     @MockitoBean
     private GetAllPlatformsUseCase getAllPlatformsUseCase;
+
+    @MockitoBean
+    private GetPlatformUseCase getPlatformUseCase;
+
+    @MockitoBean
+    private DeletePlatformUseCase deletePlatformUseCase;
 
     @Test
     @DisplayName("POST /platform returns bad request")
@@ -87,7 +91,7 @@ public class PlatformControllerTest {
                         .content(requestBody))
                 .hasStatus(HttpStatus.CREATED)
                 .bodyJson()
-                .isLenientlyEqualTo("""
+                .isEqualTo("""
                         {
                             "id": "%s",
                             "name": "%s",
@@ -126,7 +130,7 @@ public class PlatformControllerTest {
                         .uri("/platform"))
                 .hasStatus(HttpStatus.OK)
                 .bodyJson()
-                .isLenientlyEqualTo("""
+                .isEqualTo("""
                         [
                             {
                                 "id": "%s",
@@ -165,11 +169,82 @@ public class PlatformControllerTest {
                         .uri("/platform"))
                 .hasStatus(HttpStatus.OK)
                 .bodyJson()
-                .isLenientlyEqualTo("""
+                .isEqualTo("""
                         [
                         ]
                         """
                 );
+    }
+
+    @Test
+    @DisplayName("GET /platform/{id} returns platform")
+    public void getPlatformReturnsPlatform() {
+        PlatformDto platform = new PlatformDto(
+                UUID.randomUUID(),
+                "Xbox Series S",
+                LocalDate.parse("2020-11-12"),
+                "Microsoft"
+        );
+
+        given(getPlatformUseCase.getPlatform(any())).willReturn(platform);
+
+        assertThat(
+                mockMvcTester
+                        .get()
+                        .uri("/platform/{id}", platform.id()))
+                .hasStatus(HttpStatus.OK)
+                .bodyJson()
+                .isEqualTo("""
+                        {
+                            "id": "%s",
+                            "name": "%s",
+                            "releaseDate": "%s",
+                            "manufacturer": "%s"
+                        }
+                        """.formatted(
+                        platform.id().toString(),
+                        platform.name(),
+                        platform.releaseDate(),
+                        platform.manufacturer()
+                ));
+    }
+
+    @Test
+    @DisplayName("GET /platform/{id} returns not found")
+    public void getPlatformReturnsNotFound() {
+        UUID notFoundId = UUID.randomUUID();
+
+        given(getPlatformUseCase.getPlatform(any())).willThrow(new NotFoundException(notFoundId));
+
+        assertThat(
+                mockMvcTester
+                        .get()
+                        .uri("/platform/{id}", notFoundId))
+                .hasStatus(HttpStatus.NOT_FOUND)
+                .bodyJson()
+                .isEqualTo("""
+                            {
+                              "type":"about:blank",
+                              "title":"Not Found",
+                              "status": %d,
+                              "detail":"Resource not found: %s",
+                              "instance":"/platform/%s"
+                          }
+                        """.formatted(
+                        HttpStatus.NOT_FOUND.value(),
+                        notFoundId,
+                        notFoundId
+                ));
+    }
+
+    @Test
+    @DisplayName("DELETE /platform returns no content")
+    public void deletePlatformReturnsNoContent() {
+        assertThat(
+                mockMvcTester
+                        .delete()
+                        .uri("/platform/{id}", UUID.randomUUID()))
+                .hasStatus(HttpStatus.NO_CONTENT);
     }
 
 }
