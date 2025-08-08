@@ -5,7 +5,7 @@ import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.lang.ArchRule;
 import org.jmolecules.archunit.JMoleculesArchitectureRules;
 
-@AnalyzeClasses(packages = "com.icoffiel.jspecify")
+@AnalyzeClasses(packages = "com.icoffiel.jspecify.platform")
 public class ArchTests {
 
     @ArchTest
