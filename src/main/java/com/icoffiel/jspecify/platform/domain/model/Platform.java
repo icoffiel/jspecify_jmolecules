@@ -7,10 +7,10 @@ import java.time.LocalDate;
 
 @Getter
 public class Platform {
-    private PlatformId id;
-    private String name;
-    private LocalDate releaseDate;
-    private String manufacturer;
+    private final PlatformId id;
+    private final String name;
+    private final LocalDate releaseDate;
+    private final String manufacturer;
 
     public Platform(String name, LocalDate releaseDate, String manufacturer) {
         Assert.notNull(name, "name must not be null");
