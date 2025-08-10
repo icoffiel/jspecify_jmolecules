@@ -3,6 +3,7 @@ package com.icoffiel.jspecify.platform.infra.adapter.persistence.jpa;
 import com.icoffiel.jspecify.platform.domain.model.Platform;
 import com.icoffiel.jspecify.platform.domain.model.PlatformId;
 import com.icoffiel.jspecify.platform.domain.port.PlatformRepository;
+import com.icoffiel.jspecify.platform.infra.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -30,7 +31,7 @@ public class JpaPlatformRepository implements PlatformRepository {
     public Platform findById(PlatformId id) {
         return platformEntityRepository.findById(id.id())
                 .map(JpaPlatformRepository::mapToPlatform)
-                .orElse(null);
+                .orElseThrow(() -> new NotFoundException(id.id()));
     }
 
     @Override
