@@ -4,6 +4,8 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.7'
 
     id 'net.ltgt.errorprone' version '4.1.0' // NullAway is an extension of error prone
+
+    id 'jacoco'
 }
 
 group = 'com.icoffiel'
@@ -86,5 +88,17 @@ tasks.withType(JavaCompile).configureEach {
 
         // nullability of arrays (and varargs)
         option("NullAway:JSpecifyMode", "true") // https://github.com/uber/NullAway/wiki/JSpecify-Support
+    }
+}
+
+test {
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+    reports {
+        csv.required = true
+        xml.required = true
     }
 }
