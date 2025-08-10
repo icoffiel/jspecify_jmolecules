@@ -1,4 +1,4 @@
-package com.icoffiel.jspecify.platform.domain.model;
+package com.icoffiel.jspecify.platform.domain.platform.model;
 
 import lombok.Getter;
 import org.springframework.util.Assert;

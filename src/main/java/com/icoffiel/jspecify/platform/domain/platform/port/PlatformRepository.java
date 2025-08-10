@@ -1,7 +1,7 @@
-package com.icoffiel.jspecify.platform.domain.port;
+package com.icoffiel.jspecify.platform.domain.platform.port;
 
-import com.icoffiel.jspecify.platform.domain.model.Platform;
-import com.icoffiel.jspecify.platform.domain.model.PlatformId;
+import com.icoffiel.jspecify.platform.domain.platform.model.Platform;
+import com.icoffiel.jspecify.platform.domain.platform.model.PlatformId;
 
 import java.util.List;
 

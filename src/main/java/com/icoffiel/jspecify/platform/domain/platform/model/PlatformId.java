@@ -1,4 +1,4 @@
-package com.icoffiel.jspecify.platform.domain.model;
+package com.icoffiel.jspecify.platform.domain.platform.model;
 
 import org.springframework.util.Assert;
 

@@ -2,9 +2,9 @@ package com.icoffiel.jspecify.platform.infra.adapter.persistence.jpa;
 
 import com.icoffiel.jspecify.TestcontainersConfiguration;
 import com.icoffiel.jspecify.infra.adapter.persistence.jpa.PlatformEntityBuilder;
-import com.icoffiel.jspecify.platform.domain.model.Platform;
 import com.icoffiel.jspecify.platform.domain.model.PlatformBuilder;
-import com.icoffiel.jspecify.platform.domain.model.PlatformId;
+import com.icoffiel.jspecify.platform.domain.platform.model.Platform;
+import com.icoffiel.jspecify.platform.domain.platform.model.PlatformId;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

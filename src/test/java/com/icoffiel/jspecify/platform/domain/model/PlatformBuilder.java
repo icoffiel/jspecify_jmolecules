@@ -1,5 +1,7 @@
 package com.icoffiel.jspecify.platform.domain.model;
 
+import com.icoffiel.jspecify.platform.domain.platform.model.Platform;
+import com.icoffiel.jspecify.platform.domain.platform.model.PlatformId;
 import org.instancio.Instancio;
 import org.instancio.InstancioApi;
 
