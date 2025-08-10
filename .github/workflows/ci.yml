@@ -6,6 +6,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - name: Checkout sources
         uses: actions/checkout@v4
@@ -27,6 +30,6 @@ jobs:
         uses: madrapps/jacoco-report@v1.2
         with:
           paths: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml
-          token: ${{ secrets.JACOCO_PR_COMMENT }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           min-coverage-overall: 80
           min-coverage-changed-files: 60
