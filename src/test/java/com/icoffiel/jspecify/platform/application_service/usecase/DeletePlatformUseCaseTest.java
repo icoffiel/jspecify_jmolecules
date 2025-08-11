@@ -1,6 +1,7 @@
 package com.icoffiel.jspecify.platform.application_service.usecase;
 
 import com.icoffiel.jspecify.TestcontainersConfiguration;
+import com.icoffiel.jspecify.platform.application_service.usecase.platform.DeletePlatformUseCase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

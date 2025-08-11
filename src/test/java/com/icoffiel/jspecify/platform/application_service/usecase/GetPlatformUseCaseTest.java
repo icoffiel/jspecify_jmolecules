@@ -2,8 +2,10 @@ package com.icoffiel.jspecify.platform.application_service.usecase;
 
 import com.icoffiel.jspecify.TestcontainersConfiguration;
 import com.icoffiel.jspecify.infra.adapter.persistence.jpa.PlatformEntityBuilder;
-import com.icoffiel.jspecify.platform.infra.adapter.persistence.jpa.PlatformEntity;
-import com.icoffiel.jspecify.platform.infra.adapter.persistence.jpa.PlatformEntityRepository;
+import com.icoffiel.jspecify.platform.application_service.usecase.platform.GetPlatformUseCase;
+import com.icoffiel.jspecify.platform.application_service.usecase.platform.PlatformDto;
+import com.icoffiel.jspecify.platform.infra.adapter.platform.persistence.jpa.PlatformEntity;
+import com.icoffiel.jspecify.platform.infra.adapter.platform.persistence.jpa.PlatformEntityRepository;
 import com.icoffiel.jspecify.platform.infra.exception.NotFoundException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,6 +1,7 @@
 package com.icoffiel.jspecify.platform.infra.adapter.controller;
 
-import com.icoffiel.jspecify.platform.application_service.usecase.*;
+import com.icoffiel.jspecify.platform.application_service.usecase.platform.*;
+import com.icoffiel.jspecify.platform.infra.adapter.platform.controller.PlatformController;
 import com.icoffiel.jspecify.platform.infra.exception.NotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
