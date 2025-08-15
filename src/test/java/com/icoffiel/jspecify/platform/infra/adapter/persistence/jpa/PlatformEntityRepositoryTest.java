@@ -1,7 +1,7 @@
 package com.icoffiel.jspecify.platform.infra.adapter.persistence.jpa;
 
 import com.icoffiel.jspecify.TestcontainersConfiguration;
-import com.icoffiel.jspecify.infra.adapter.persistence.jpa.PlatformEntityBuilder;
+import com.icoffiel.jspecify.infra.adapter.platform.persistence.jpa.PlatformEntityBuilder;
 import com.icoffiel.jspecify.platform.infra.adapter.platform.persistence.jpa.PlatformEntity;
 import com.icoffiel.jspecify.platform.infra.adapter.platform.persistence.jpa.PlatformEntityRepository;
 import org.junit.jupiter.api.Test;

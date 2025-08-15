@@ -4,16 +4,14 @@ import com.icoffiel.jspecify.UseCase;
 import com.icoffiel.jspecify.platform.domain.platform.model.Platform;
 import com.icoffiel.jspecify.platform.domain.platform.model.PlatformId;
 import com.icoffiel.jspecify.platform.domain.platform.port.PlatformRepository;
+import lombok.RequiredArgsConstructor;
 
 import java.util.UUID;
 
 @UseCase
+@RequiredArgsConstructor
 public class GetPlatformUseCase {
     private final PlatformRepository platformRepository;
-
-    public GetPlatformUseCase(PlatformRepository platformRepository) {
-        this.platformRepository = platformRepository;
-    }
 
     public PlatformDto getPlatform(UUID id) {
         return toPlatformDto(

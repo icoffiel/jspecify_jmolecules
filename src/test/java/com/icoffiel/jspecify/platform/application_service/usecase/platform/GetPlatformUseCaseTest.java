@@ -1,9 +1,7 @@
-package com.icoffiel.jspecify.platform.application_service.usecase;
+package com.icoffiel.jspecify.platform.application_service.usecase.platform;
 
 import com.icoffiel.jspecify.TestcontainersConfiguration;
-import com.icoffiel.jspecify.infra.adapter.persistence.jpa.PlatformEntityBuilder;
-import com.icoffiel.jspecify.platform.application_service.usecase.platform.GetPlatformUseCase;
-import com.icoffiel.jspecify.platform.application_service.usecase.platform.PlatformDto;
+import com.icoffiel.jspecify.infra.adapter.platform.persistence.jpa.PlatformEntityBuilder;
 import com.icoffiel.jspecify.platform.infra.adapter.platform.persistence.jpa.PlatformEntity;
 import com.icoffiel.jspecify.platform.infra.adapter.platform.persistence.jpa.PlatformEntityRepository;
 import com.icoffiel.jspecify.platform.infra.exception.NotFoundException;

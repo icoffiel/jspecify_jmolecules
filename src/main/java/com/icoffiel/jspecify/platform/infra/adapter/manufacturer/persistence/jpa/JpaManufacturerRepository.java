@@ -20,11 +20,6 @@ public class JpaManufacturerRepository implements ManufacturerRepository {
     }
 
     @Override
-    public void deleteById(@NonNull ManufacturerId manufacturerId) {
-        manufacturerEntityRepository.deleteById(manufacturerId.id());
-    }
-
-    @Override
     public @NonNull List<Manufacturer> findAll() {
         return manufacturerEntityRepository.findAll().stream()
                 .map(JpaManufacturerRepository::mapToManufacturer)

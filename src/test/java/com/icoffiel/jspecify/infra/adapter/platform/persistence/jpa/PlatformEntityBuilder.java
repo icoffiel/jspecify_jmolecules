@@ -1,4 +1,4 @@
-package com.icoffiel.jspecify.infra.adapter.persistence.jpa;
+package com.icoffiel.jspecify.infra.adapter.platform.persistence.jpa;
 
 import com.icoffiel.jspecify.platform.infra.adapter.platform.persistence.jpa.PlatformEntity;
 import org.instancio.InstancioApi;
