@@ -1,5 +1,6 @@
 package com.icoffiel.jspecify.platform.infra.adapter.platform.persistence.jpa;
 
+import com.icoffiel.jspecify.platform.infra.adapter.manufacturer.persistence.jpa.ManufacturerEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -29,11 +30,11 @@ public class PlatformEntity {
     @Column(name = "release_date", nullable = false)
     private LocalDate releaseDate;
 
-    @NotBlank
-    @Column(name = "manufacturer", nullable = false)
-    private String manufacturer;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "manufacturer_id", nullable = false)
+    private ManufacturerEntity manufacturer;
 
-    public PlatformEntity(String name, LocalDate releaseDate, String manufacturer) {
+    public PlatformEntity(String name, LocalDate releaseDate, ManufacturerEntity manufacturer) {
         this.name = name;
         this.releaseDate = releaseDate;
         this.manufacturer = manufacturer;

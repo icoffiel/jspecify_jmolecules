@@ -66,7 +66,7 @@ public class PlatformControllerTest {
                 UUID.randomUUID(),
                 "Xbox Series S",
                 LocalDate.parse("2020-11-12"),
-                "Microsoft"
+                UUID.randomUUID()
         );
 
         String requestBody = """
@@ -78,7 +78,7 @@ public class PlatformControllerTest {
                 """.formatted(
                 expectedPlatform.name(),
                 expectedPlatform.releaseDate(),
-                expectedPlatform.manufacturer()
+                expectedPlatform.manufacturerId()
         );
 
         given(createPlatformUseCase.createPlatform(any())).willReturn(expectedPlatform);
@@ -96,13 +96,13 @@ public class PlatformControllerTest {
                             "id": "%s",
                             "name": "%s",
                             "releaseDate": "%s",
-                            "manufacturer": "%s"
+                            "manufacturerId": "%s"
                         }
                         """.formatted(
                         expectedPlatform.id().toString(),
                         expectedPlatform.name(),
                         expectedPlatform.releaseDate(),
-                        expectedPlatform.manufacturer()
+                        expectedPlatform.manufacturerId()
                 ));
     }
 
@@ -113,13 +113,13 @@ public class PlatformControllerTest {
                 UUID.randomUUID(),
                 "Xbox Series S",
                 LocalDate.parse("2020-11-12"),
-                "Microsoft"
+                UUID.randomUUID()
         );
         PlatformDto platform2 = new PlatformDto(
                 UUID.randomUUID(),
                 "Xbox Series X",
                 LocalDate.parse("2021-11-12"),
-                "Microsoft"
+                UUID.randomUUID()
         );
 
         given(getAllPlatformsUseCase.getAllPlatforms()).willReturn(List.of(platform1, platform2));
@@ -136,24 +136,24 @@ public class PlatformControllerTest {
                                 "id": "%s",
                                 "name": "%s",
                                 "releaseDate": "%s",
-                                "manufacturer": "%s"
+                                "manufacturerId": "%s"
                             },
                             {
                                 "id": "%s",
                                 "name": "%s",
                                 "releaseDate": "%s",
-                                "manufacturer": "%s"
+                                "manufacturerId": "%s"
                             }
                         ]
                         """.formatted(
                         platform1.id().toString(),
                         platform1.name(),
                         platform1.releaseDate(),
-                        platform1.manufacturer(),
+                        platform1.manufacturerId(),
                         platform2.id().toString(),
                         platform2.name(),
                         platform2.releaseDate(),
-                        platform2.manufacturer()
+                        platform2.manufacturerId()
                 ));
     }
 
@@ -183,7 +183,7 @@ public class PlatformControllerTest {
                 UUID.randomUUID(),
                 "Xbox Series S",
                 LocalDate.parse("2020-11-12"),
-                "Microsoft"
+                UUID.randomUUID()
         );
 
         given(getPlatformUseCase.getPlatform(any())).willReturn(platform);
@@ -199,13 +199,13 @@ public class PlatformControllerTest {
                             "id": "%s",
                             "name": "%s",
                             "releaseDate": "%s",
-                            "manufacturer": "%s"
+                            "manufacturerId": "%s"
                         }
                         """.formatted(
                         platform.id().toString(),
                         platform.name(),
                         platform.releaseDate(),
-                        platform.manufacturer()
+                        platform.manufacturerId()
                 ));
     }
 

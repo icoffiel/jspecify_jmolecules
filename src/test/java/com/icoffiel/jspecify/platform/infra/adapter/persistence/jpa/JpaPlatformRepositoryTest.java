@@ -1,13 +1,17 @@
 package com.icoffiel.jspecify.platform.infra.adapter.persistence.jpa;
 
 import com.icoffiel.jspecify.TestcontainersConfiguration;
+import com.icoffiel.jspecify.infra.adapter.manufacturer.persistence.jpa.ManufacturerEntityBuilder;
 import com.icoffiel.jspecify.infra.adapter.platform.persistence.jpa.PlatformEntityBuilder;
 import com.icoffiel.jspecify.platform.domain.platform.model.Platform;
 import com.icoffiel.jspecify.platform.domain.platform.model.PlatformBuilder;
 import com.icoffiel.jspecify.platform.domain.platform.model.PlatformId;
+import com.icoffiel.jspecify.platform.infra.adapter.manufacturer.persistence.jpa.ManufacturerEntity;
+import com.icoffiel.jspecify.platform.infra.adapter.manufacturer.persistence.jpa.ManufacturerEntityRepository;
 import com.icoffiel.jspecify.platform.infra.adapter.platform.persistence.jpa.JpaPlatformRepository;
 import com.icoffiel.jspecify.platform.infra.adapter.platform.persistence.jpa.PlatformEntity;
 import com.icoffiel.jspecify.platform.infra.adapter.platform.persistence.jpa.PlatformEntityRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -27,11 +31,29 @@ class JpaPlatformRepositoryTest {
     @Autowired
     private PlatformEntityRepository platformEntityRepository;
 
+    @Autowired
+    private ManufacturerEntityRepository manufacturerEntityRepository;
+
+    private ManufacturerEntity savedManufacturer;
+
+    @BeforeEach
+    void setUp() {
+        manufacturerEntityRepository.deleteAll();
+        platformEntityRepository.deleteAll();
+
+        savedManufacturer = manufacturerEntityRepository.save(
+                ManufacturerEntityBuilder.aManufacturerEntity()
+                        .withId(null)
+                        .build()
+        );
+    }
+
     @Test
     void can_delete_by_id() {
         PlatformEntity platformEntity = PlatformEntityBuilder
                 .aPlatformEntity()
                 .withId(null)
+                .withManufacturer(savedManufacturer)
                 .build();
 
         PlatformEntity savedPlatform = platformEntityRepository.save(platformEntity);
@@ -50,6 +72,7 @@ class JpaPlatformRepositoryTest {
         PlatformEntity platformEntity = PlatformEntityBuilder
                 .aPlatformEntity()
                 .withId(null)
+                .withManufacturer(savedManufacturer)
                 .build();
 
         PlatformEntity savedPlatform = platformEntityRepository.save(platformEntity);
@@ -88,7 +111,7 @@ class JpaPlatformRepositoryTest {
         assertThat(savedPlatform.getId(), notNullValue());
         assertThat(savedPlatform.getName(), equalTo(platform.getName()));
         assertThat(savedPlatform.getReleaseDate(), equalTo(platform.getReleaseDate()));
-        assertThat(savedPlatform.getManufacturer(), equalTo(platform.getManufacturer()));
+        assertThat(savedPlatform.getManufacturer().getId(), equalTo(platform.getManufacturer().getId()));
     }
 
 }

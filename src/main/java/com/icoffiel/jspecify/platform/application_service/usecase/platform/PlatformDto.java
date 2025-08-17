@@ -7,6 +7,6 @@ public record PlatformDto(
         UUID id,
         String name,
         LocalDate releaseDate,
-        String manufacturer
+        UUID manufacturerId
 ) {
 }

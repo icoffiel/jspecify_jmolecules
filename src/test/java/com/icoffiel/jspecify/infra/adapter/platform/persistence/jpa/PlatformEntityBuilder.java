@@ -1,5 +1,6 @@
 package com.icoffiel.jspecify.infra.adapter.platform.persistence.jpa;
 
+import com.icoffiel.jspecify.platform.infra.adapter.manufacturer.persistence.jpa.ManufacturerEntity;
 import com.icoffiel.jspecify.platform.infra.adapter.platform.persistence.jpa.PlatformEntity;
 import org.instancio.InstancioApi;
 
@@ -31,7 +32,7 @@ public class PlatformEntityBuilder {
         return this;
     }
 
-    public PlatformEntityBuilder withManufacturer(String manufacturer) {
+    public PlatformEntityBuilder withManufacturer(ManufacturerEntity manufacturer) {
         builder.set(field(PlatformEntity::getManufacturer), manufacturer);
         return this;
     }

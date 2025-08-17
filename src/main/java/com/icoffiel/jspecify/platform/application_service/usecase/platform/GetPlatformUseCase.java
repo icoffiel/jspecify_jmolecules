@@ -26,7 +26,7 @@ public class GetPlatformUseCase {
                 platform.getId().id(),
                 platform.getName(),
                 platform.getReleaseDate(),
-                platform.getManufacturer()
+                platform.getManufacturer().getId().id()
         );
     }
 }

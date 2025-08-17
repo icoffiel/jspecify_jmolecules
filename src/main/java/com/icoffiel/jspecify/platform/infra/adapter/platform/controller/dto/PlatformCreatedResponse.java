@@ -9,6 +9,6 @@ public record PlatformCreatedResponse(
         @NotNull UUID id,
         @NotNull String name,
         @NotNull LocalDate releaseDate,
-        @NotNull String manufacturer
+        @NotNull UUID manufacturerId
 ) {
 }

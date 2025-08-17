@@ -1,7 +1,10 @@
 package com.icoffiel.jspecify.platform.application_service.usecase.platform;
 
 import com.icoffiel.jspecify.TestcontainersConfiguration;
+import com.icoffiel.jspecify.infra.adapter.manufacturer.persistence.jpa.ManufacturerEntityBuilder;
 import com.icoffiel.jspecify.infra.adapter.platform.persistence.jpa.PlatformEntityBuilder;
+import com.icoffiel.jspecify.platform.infra.adapter.manufacturer.persistence.jpa.ManufacturerEntity;
+import com.icoffiel.jspecify.platform.infra.adapter.manufacturer.persistence.jpa.ManufacturerEntityRepository;
 import com.icoffiel.jspecify.platform.infra.adapter.platform.persistence.jpa.PlatformEntityRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,17 +28,29 @@ class GetAllPlatformsUseCaseTest {
     @Autowired
     PlatformEntityRepository entityRepository;
 
+    @Autowired
+    ManufacturerEntityRepository manufacturerRepository;
+
     @BeforeEach
     void setUp() {
         entityRepository.deleteAll();
+        manufacturerRepository.deleteAll();
+
+        ManufacturerEntity savedManufacturer = manufacturerRepository.save(
+                ManufacturerEntityBuilder.aManufacturerEntity()
+                        .withId(null)
+                        .build()
+        );
 
         entityRepository.saveAll(
                 List.of(
                         PlatformEntityBuilder.aPlatformEntity()
                                 .withId(null)
+                                .withManufacturer(savedManufacturer)
                                 .build(),
                         PlatformEntityBuilder.aPlatformEntity()
                                 .withId(null)
+                                .withManufacturer(savedManufacturer)
                                 .build()
                 )
         );

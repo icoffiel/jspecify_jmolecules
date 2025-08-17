@@ -37,7 +37,7 @@ public class PlatformController {
             platformCreatedDto.id(),
             platformCreatedDto.name(),
             platformCreatedDto.releaseDate(),
-            platformCreatedDto.manufacturer()
+            platformCreatedDto.manufacturerId()
         );
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -52,7 +52,7 @@ public class PlatformController {
                 platform.id(),
                 platform.name(),
                 platform.releaseDate(),
-                platform.manufacturer()
+                platform.manufacturerId()
             ))
             .collect(Collectors.toList());
     }
@@ -64,7 +64,7 @@ public class PlatformController {
             platform.id(),
             platform.name(),
             platform.releaseDate(),
-            platform.manufacturer()
+            platform.manufacturerId()
         );
     }
 

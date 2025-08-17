@@ -1,7 +1,10 @@
 package com.icoffiel.jspecify.platform.application_service.usecase.platform;
 
 import com.icoffiel.jspecify.TestcontainersConfiguration;
+import com.icoffiel.jspecify.infra.adapter.manufacturer.persistence.jpa.ManufacturerEntityBuilder;
 import com.icoffiel.jspecify.infra.adapter.platform.persistence.jpa.PlatformEntityBuilder;
+import com.icoffiel.jspecify.platform.infra.adapter.manufacturer.persistence.jpa.ManufacturerEntity;
+import com.icoffiel.jspecify.platform.infra.adapter.manufacturer.persistence.jpa.ManufacturerEntityRepository;
 import com.icoffiel.jspecify.platform.infra.adapter.platform.persistence.jpa.PlatformEntity;
 import com.icoffiel.jspecify.platform.infra.adapter.platform.persistence.jpa.PlatformEntityRepository;
 import com.icoffiel.jspecify.platform.infra.exception.NotFoundException;
@@ -29,18 +32,31 @@ class GetPlatformUseCaseTest {
     @Autowired
     private PlatformEntityRepository platformEntityRepository;
 
+    @Autowired
+    private ManufacturerEntityRepository manufacturerEntityRepository;
+
     private List<PlatformEntity> savedPlatforms;
 
     @BeforeEach
     void setUp() {
         platformEntityRepository.deleteAll();
-        savedPlatforms =platformEntityRepository.saveAll(
+        manufacturerEntityRepository.deleteAll();
+
+        ManufacturerEntity savedManufacturer = manufacturerEntityRepository.save(
+                ManufacturerEntityBuilder.aManufacturerEntity()
+                        .withId(null)
+                        .build()
+        );
+
+        savedPlatforms = platformEntityRepository.saveAll(
                 List.of(
                         PlatformEntityBuilder.aPlatformEntity()
                                 .withId(null)
+                                .withManufacturer(savedManufacturer)
                                 .build(),
                         PlatformEntityBuilder.aPlatformEntity()
                                 .withId(null)
+                                .withManufacturer(savedManufacturer)
                                 .build()
                 )
         );
@@ -49,6 +65,7 @@ class GetPlatformUseCaseTest {
     @AfterEach
     void tearDown() {
         platformEntityRepository.deleteAll();
+        manufacturerEntityRepository.deleteAll();
     }
 
     @Test
@@ -61,7 +78,7 @@ class GetPlatformUseCaseTest {
         assertThat(platform.id(), equalTo(aSavedPlatform.getId()));
         assertThat(platform.name(), equalTo(aSavedPlatform.getName()));
         assertThat(platform.releaseDate(), equalTo(aSavedPlatform.getReleaseDate()));
-        assertThat(platform.manufacturer(), equalTo(aSavedPlatform.getManufacturer()));
+        assertThat(platform.manufacturerId(), equalTo(aSavedPlatform.getManufacturer().getId()));
     }
 
     @Test

@@ -1,8 +1,11 @@
 package com.icoffiel.jspecify.platform.infra.adapter.platform.persistence.jpa;
 
+import com.icoffiel.jspecify.platform.domain.manufacturer.model.Manufacturer;
+import com.icoffiel.jspecify.platform.domain.manufacturer.model.ManufacturerId;
 import com.icoffiel.jspecify.platform.domain.platform.model.Platform;
 import com.icoffiel.jspecify.platform.domain.platform.model.PlatformId;
 import com.icoffiel.jspecify.platform.domain.platform.port.PlatformRepository;
+import com.icoffiel.jspecify.platform.infra.adapter.manufacturer.persistence.jpa.ManufacturerEntity;
 import com.icoffiel.jspecify.platform.infra.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
@@ -40,7 +43,10 @@ public class JpaPlatformRepository implements PlatformRepository {
         PlatformEntity entity = new PlatformEntity(
                 platform.getName(),
                 platform.getReleaseDate(),
-                platform.getManufacturer()
+                new ManufacturerEntity(
+                        platform.getManufacturer().getId().id(),
+                        platform.getManufacturer().getName()
+                )
         );
 
         PlatformEntity savedEntity = platformEntityRepository.save(entity);
@@ -53,6 +59,10 @@ public class JpaPlatformRepository implements PlatformRepository {
                 new PlatformId(entity.getId()),
                 entity.getName(),
                 entity.getReleaseDate(),
-                entity.getManufacturer());
+                new Manufacturer(
+                        new ManufacturerId(entity.getManufacturer().getId()),
+                        entity.getManufacturer().getName()
+                )
+        );
     }
 }

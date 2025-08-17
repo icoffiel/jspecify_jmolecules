@@ -2,6 +2,7 @@ package com.icoffiel.jspecify.platform.domain.platform.model;
 
 import org.instancio.Instancio;
 import org.instancio.InstancioApi;
+import org.jspecify.annotations.Nullable;
 
 import java.time.LocalDate;
 
@@ -14,7 +15,7 @@ public class PlatformBuilder {
         return new PlatformBuilder();
     }
 
-    public PlatformBuilder withId(PlatformId id) {
+    public PlatformBuilder withId(@Nullable PlatformId id) {
         builder.set(field(Platform::getId), id);
         return this;
     }

@@ -33,7 +33,7 @@ class ManufacturerControllerTest {
     private GetManufacturerUseCase getManufacturerUseCase;
 
     @Test
-    @DisplayName("POST /manufacturer returns bad request")
+    @DisplayName("POST /manufacturerId returns bad request")
     public void manufacturerReturnsBadRequest() {
         assertThat(
                 mockMvcTester
@@ -92,7 +92,7 @@ class ManufacturerControllerTest {
     }
 
     @Test
-    @DisplayName("GET /manufacturer returns manufacturers")
+    @DisplayName("GET /manufacturerId returns manufacturers")
     public void getManufacturersReturnsManufacturers() {
         ManufacturerDto manufacturer1 = new ManufacturerDto(
                 UUID.randomUUID(),
@@ -132,7 +132,7 @@ class ManufacturerControllerTest {
     }
 
     @Test
-    @DisplayName("GET /manufacturer returns empty list")
+    @DisplayName("GET /manufacturerId returns empty list")
     public void getPlatformsReturnsEmptyList() {
 
         given(getAllManufacturersUseCase.getAllManufacturers()).willReturn(List.of());
@@ -151,7 +151,7 @@ class ManufacturerControllerTest {
     }
 
     @Test
-    @DisplayName("GET /manufacturer/{id} returns manufacturer")
+    @DisplayName("GET /manufacturerId/{id} returns manufacturerId")
     public void getManufacturerReturnsManufacturer() {
         ManufacturerDto manufacturer = new ManufacturerDto(
                 UUID.randomUUID(),
@@ -178,7 +178,7 @@ class ManufacturerControllerTest {
     }
 
     @Test
-    @DisplayName("GET /manufacturer/{id} returns not found")
+    @DisplayName("GET /manufacturerId/{id} returns not found")
     public void getManufacturerReturnsNotFound() {
         UUID notFoundId = UUID.randomUUID();
 
